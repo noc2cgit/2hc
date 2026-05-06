@@ -17,14 +17,17 @@ sudo dnf install -y https://noc2cgit.github.io/2hc/repo/2hc-release-latest.noarc
 sudo dnf install -y 2hc
 
 2hc -v          # imprime a versao instalada
+2hc --help      # ajuda resumida
+2hc --help-full # catalogo completo de argumentos
 2hc --noc       # gera relatorio NOC
+2hc --update    # forca atualizacao manual via dnf
 ```
 
 A primeira linha adiciona `/etc/yum.repos.d/2hc.repo` apontando para
 este repositorio. A segunda instala o pacote `2hc` propriamente dito.
 
 O auto-update diario (`2hc-autoupdate.timer`) e ativado automaticamente
-na primeira instalacao — atualiza apenas o pacote `2hc`.
+no `%post` da instalacao — atualiza apenas o pacote `2hc`.
 
 ## Verificacao manual
 
@@ -53,14 +56,16 @@ GitHub Pages vem de `gh-pages`.
 ## Documentacao
 
 - Codigo-fonte: [ulissesb2com/healthcheck_noc](https://github.com/ulissesb2com/healthcheck_noc)
-- Instalacao detalhada: [Documentation/INSTALL.md](https://github.com/ulissesb2com/healthcheck_noc/blob/homolog/Documentation/INSTALL.md)
-- Release pipeline: [Documentation/RELEASE.md](https://github.com/ulissesb2com/healthcheck_noc/blob/homolog/Documentation/RELEASE.md)
+- Instalacao detalhada: [Documentation/INSTALL.md](https://github.com/ulissesb2com/healthcheck_noc/blob/main/Documentation/INSTALL.md)
+- Release pipeline: [Documentation/RELEASE.md](https://github.com/ulissesb2com/healthcheck_noc/blob/main/Documentation/RELEASE.md)
 
 ## Recursos do 2hc
 
 - Governanca contextual de tablespaces (10 criterios + 3 dimensoes)
 - Forecast de exaustao FS/ASM com janela longa preferida (90d)
-- Deteccao de conflito de janelas RMAN x datapump
+- Deteccao de conflito de janelas RMAN x datapump (filtro estrito level0/full)
 - Cruzamento top-consumo x logs de backup
 - Suporte a Standby (DataGuard) e Grid Infrastructure (+ASM)
+- Pacote noarch universal — funciona em Oracle Linux 7/8/9/10 sem distincao de minor
+- Auto-atualizacao diaria via `systemd` timer (`2hc-autoupdate.timer`)
 - Relatorio formatado para uso em NOC + saida JSON opcional
